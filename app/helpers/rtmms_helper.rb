@@ -1,0 +1,2 @@
+module RtmmsHelper
+end

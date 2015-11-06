@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resources :rtmms
+  get "rtmm/get_data", :to => "rtmms#get_data"
+  get "rtmm/del_data", :to => "rtmms#del_data"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
