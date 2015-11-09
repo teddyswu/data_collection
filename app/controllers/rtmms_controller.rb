@@ -1,11 +1,11 @@
 class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
-	# def index
-	# 	@category = RtmmCategory.all
-	# 	@history  = RtmmHistory.all
-	# 	@user     = RtmmUser.all
-	# 	@daycount 			= RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
-	# end
+	def index
+		@category = RtmmCategory.all
+		@history  = RtmmHistory.all
+		@user     = RtmmUser.all
+		@daycount 			= RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
+	end
 	def get_data
     if cookies[:sogi_track_name].present?
 			rtmm = Rtmm.new

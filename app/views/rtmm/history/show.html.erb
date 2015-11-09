@@ -1,0 +1,89 @@
+<div class="row">
+	<div class="col-lg-6">
+		<div id="donut-example" style="height: 250px;"></div>
+		<script>
+		  Morris.Donut({
+		    element: 'donut-example',
+		    data: [
+		      <% @history.each do |key, value|%>
+		        {label: "<%= render_category_name(key) %>", value: <%= render_value(@history_list.size, value).to_i %>},
+		      <% end %>
+		    ],
+		    formatter: function (y) { return y + "%" ;}
+		  });
+		</script>
+	</div>
+	<div class="col-lg-6">
+		<p></p>
+		<div class="panel panel-danger">
+      <div class="panel-heading">Warning Panel</div>
+      <div class="panel-body">
+        <p>1. 所顯示之資料，可能為非分析過之資料。</p>
+        <p>2. 分析時間請見右上角。</p>
+      </div>
+      <div class="panel-footer">
+        Lats Edit 2015 11 02
+      </div>
+	  </div>
+	</div>
+  <div class="col-lg-12">
+    <a class="btn btn-default btn-lg btn-block" onclick="get_msg('<%= params[:id]%>')" href="##">Talk To</a>
+    <div class="adbox" style="height: 250PX;overflow-x: hidden;overflow-y: auto;">
+      <div id="www"></div>
+      <%= form_for AdMsg.new, :url => rtmm_get_msg_path, :remote => true, :html => {:style => "display:none;"} do |f| %>
+        <%= f.text_field :msg %>
+        <%= f.hidden_field :to_user, :value => '' %>
+        <%= f.hidden_field :from_user, :value => 'admin' %>
+        <%= f.submit '送出'%>
+      <% end %>
+    </div>
+    <script>
+      function get_msg(who){
+        url = '/rtmm/talk?who=' + who;
+        xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", url, false );
+        xmlHttp.send( null );
+        content = xmlHttp.responseText;
+        $("#www").html(content);
+        $("#ad_msg_to_user").val(who);
+        $("#new_ad_msg").show();
+        setTimeout("get_msg('" + who + "')", 1000 );
+      };
+      // setTimeout(document.getElementById('active').contentWindow.location.reload(true), 1000 );
+    </script>
+  </div>
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+      <div class="panel-heading">歷程紀錄</div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>頁面類別</th>
+                <th>頁面產品</th>
+                <th>停留時間</th>
+              </tr>
+            </thead>
+            <tbody>
+            	<% @history_list.each_with_index do |history_list, i| %>
+            	  <% if i % 2 == 0 %>
+	                <tr class="success">
+	              <% else %>
+	                <tr class="info">
+	              <% end %>
+	                <td><%= history_list.key %></td>
+	                <td><%= history_list.val %></td>
+	                <td><%= history_list.residence_time %></td>
+	            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+      <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+	</div>
+</div>

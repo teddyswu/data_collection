@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
   resources :rtmms
+  namespace :rtmm do
+    resources :customer_base
+    resources :history
+    resources :supplier
+  end
   get "rtmm/get_data", :to => "rtmms#get_data"
   get "rtmm/del_data", :to => "rtmms#del_data"
   # The priority is based upon order of creation: first created -> highest priority.

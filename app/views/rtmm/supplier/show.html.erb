@@ -1,0 +1,32 @@
+<script language="JavaScript">
+	function myrefresh(){
+		window.location.reload();
+	}
+	// setTimeout('myrefresh()',1000); //指定1秒刷新一次
+</script>
+<div class="row">
+	<p></p>
+	<div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-bell fa-fw"></i> <%= @category.name %>
+      </div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <div class="list-group">
+        	<% @users.each do |user| %>
+	          <a href="<%= rtmm_history_path(user.who)%>" class="list-group-item">
+	            <i class="fa fa-comment fa-fw"></i> <%= user.who %>
+	            <span class="pull-right text-muted small"><em><%= (Time.now - user.updated_at).to_i %></em></span>
+	          </a>
+          <% end %>
+        </div>
+        <!-- /.list-group -->
+        <a href="#" onClick="window.location.reload();return false;" class="btn btn-default btn-block">ReLoad</a>
+      </div>
+      <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+  </div>
+  <!-- /.col-lg-4 -->
+</div>

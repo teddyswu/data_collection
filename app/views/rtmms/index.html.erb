@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Dashboard</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-comments fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge"><%= @category.size%></div>
+            <div>客群</div>
+          </div>
+        </div>
+      </div>
+      <a href="<%= rtmm_supplier_index_path %>">
+        <div class="panel-footer">
+          <span class="pull-left">供應商介面</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-green">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-tasks fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge"><%= @user.size%></div>
+            <div>活躍</div>
+          </div>
+        </div>
+      </div>
+      <a href="<%#= rtmm_customer_base_index_path %>">
+        <div class="panel-footer">
+          <span class="pull-left">檢視客群</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-red">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-support fa-5x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge"><%= @history.size%></div>
+            <div>記錄</div>
+          </div>
+        </div>
+      </div>
+      <a href="<%= rtmm_history_index_path %>">
+        <div class="panel-footer">
+          <span class="pull-left">歷程分析</span>
+          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+          <div class="clearfix"></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- /.row -->
+<div class"col-lg-12">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Last 7 Day</h3>
+      </div>
+      <div class="panel-body">
+        <div id="myfirstchart" style="height: 250px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'myfirstchart',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    <% @daycount.each do |daycount|%>
+      { day: '<%= daycount.sdate %>', value: <%= daycount.pa %> },
+    <% end %>
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'day',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Value']
+});
+</script>
