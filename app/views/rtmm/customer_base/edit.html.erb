@@ -1,0 +1,27 @@
+<%= form_for @cate, :url => rtmm_customer_base_path do |f| %>
+	<%= f.label :name, t('rtmm.name') %>
+	<%= f.text_field :name %>
+	<br >
+	<%= f.label :brand_preference, t('rtmm.brand_preference') %>
+	<%= f.select :brand_preference, options_from_collection_for_select(@brand_preference, "id", "name", @cate.brand_preference) %>
+	<br >
+	<%= f.label :price, t('rtmm.price') %>
+	<%= f.select :price, options_from_collection_for_select(@price, "id", "name", @cate.price) %>
+	<br >
+	<%= f.label :position, t('rtmm.position') %>
+	<%= f.select :position, options_from_collection_for_select(@position, "id", "name", @cate.position) %>
+	<br >
+	<%= f.label :group, t('rtmm.group') %>
+	<%= f.select :group, options_from_collection_for_select(@group, "id", "name", @cate.group) %>
+	<br >
+	<%= f.label :product_color, t('rtmm.product_color') %>
+	<%= f.select :product_color, options_from_collection_for_select(@product_color, "id", "name", @cate.product_color) %>
+	<br >
+	<%= f.label :prefecture, t('rtmm.prefecture') %>
+	<%= f.select :prefecture, options_from_collection_for_select(@prefecture, "id", "name", @cate.prefecture) %>
+	<br >
+	<%= f.label :other_prefecture, t('rtmm.other_prefecture') %>
+	<%= f.select :other_prefecture, options_from_collection_for_select(@other_prefecture, "id", "name", @cate.other_prefecture) %>
+	<br >
+	<%= f.submit "submit"%>
+<% end %>
