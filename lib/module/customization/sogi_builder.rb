@@ -19,15 +19,15 @@ module SogiBuilder
     def self.group(history)
       case history.key
       when "article"
-        article = Article.find_by_url_keyword(history.val)
-        if article.created_at + 5.days < Time.now #最新科技
+        article = Article.find_by_title(history.val)
+        if article.present? and article.created_at + 5.days < Time.now #最新科技
           @assort << "1"
           position(history)
           SogiBuilder::CustomizedLog.write("jobs.log", "group")
         end
       when "product"
         case history.val
-        when /apple/
+        when /apple/ , /Apple/ , /iPhone/ , /iphone/
           history.category = 15
           history.save
         when /samsung/
