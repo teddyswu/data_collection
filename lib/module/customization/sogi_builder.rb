@@ -19,7 +19,7 @@ module SogiBuilder
     def self.group(history)
       case history.key
       when "article"
-        article = Refinery::Page.find_by_url_keyword(history.val)
+        article = Article.find_by_url_keyword(history.val)
         if article.created_at + 5.days < Time.now #最新科技
           @assort << "1"
           position(history)
