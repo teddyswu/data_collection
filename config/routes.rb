@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "rtmm/get_data", :to => "rtmms#get_data"
   get "rtmm/del_data", :to => "rtmms#del_data"
   get "rtmm/msg", :to =>"rtmms#msg"
+  match "rtmm/get_msg", :to => "rtmms#get_msg", :via => [:post]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
