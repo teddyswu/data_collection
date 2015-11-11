@@ -54,4 +54,24 @@ class RtmmsController < ApplicationController
 		end
 		render :text => ""
 	end
+	def talk
+  	who = params[:who].to_s
+  	@ad_msg = AdMsg.where(["to_user = ? or from_user = ?", who, who]).order("created_at DESC").limit(3).reverse
+		render :layout => false
+  end
+
+  def msg
+  	@ad_msg = AdMsg.where(["to_user = ? or from_user = ?", cookies[:sogi_track_name].to_s, cookies[:sogi_track_name].to_s]).order("created_at DESC").limit(3).reverse
+  	@ad_msg = [] if @ad_msg.blank?
+  	render :layout => false
+  end
+
+  def get_msg
+  	ad_msg = AdMsg.new(cate_params)
+  	ad_msg.save
+  end
+
+  def cate_params
+  	params.require(:ad_msg).permit(:msg,:to_user, :from_user)
+  end
 end
