@@ -7,16 +7,16 @@ class RtmmsController < ApplicationController
 		@daycount 			= RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
 	end
 	def get_data
-    if cookies[:sogi_track_name].present?
+		who = Digest::MD5.hexdigest(params[:who]).downcase
+		check_rtmm = Rtmm.find_by_who(who)
+    if check_rtmm.blank?
 			rtmm = Rtmm.new
-	    rtmm.who = cookies[:sogi_track_name].to_s
+	    rtmm.who = who
 	    rtmm.key = params[:key].to_s
 	    rtmm.val = params[:val].to_s
 	    rtmm.save!
 	    user = RtmmUser.find_or_create_by(who: rtmm.who)
 	  else
-	  	who = Digest::MD5.hexdigest(request.remote_ip.encode('utf-8')).downcase 
-	  	check_rtmm = Rtmm.where(:who => who)
 	  	i = 1
 	  	loop do
 	  		i += 1
@@ -37,7 +37,7 @@ class RtmmsController < ApplicationController
   end
   def del_data
 		if params[:who].present? & params[:key].present? & params[:val].present?
-      who = cookies[:sogi_track_name].to_s
+      who = Digest::MD5.hexdigest(params[:who]).downcase
       key = params[:key].to_s
       val = params[:val].to_s
 			rtmm = Rtmm.where(:who => who, :key => key, :val => val)
