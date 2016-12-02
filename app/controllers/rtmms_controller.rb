@@ -8,7 +8,7 @@ class RtmmsController < ApplicationController
 	end
 	def get_data
 		who = Digest::MD5.hexdigest(params[:who]).downcase
-		check_rtmm = Rtmm.find_by_who(who)
+		check_rtmm = RtmmUser.find_by_who(who)
     if check_rtmm.present?
 			rtmm = Rtmm.new
 	    rtmm.who = who
