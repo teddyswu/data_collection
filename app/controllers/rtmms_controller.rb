@@ -16,7 +16,6 @@ class RtmmsController < ApplicationController
 	    rtmm.key = params[:key].to_s
 	    rtmm.val = params[:val].to_s
 	    rtmm.save!
-	    user = RtmmUser.find_or_create_by(who: rtmm.who)
 	  else
 	  	i = 1
 	  	loop do
@@ -24,7 +23,6 @@ class RtmmsController < ApplicationController
 	  		who = who + i.to_s
 	  		break if Rtmm.where(:who => who).blank?
 	  	end
-	  	cookies[:sogi_track_name] = who
 	  	rtmm = Rtmm.new
 	    rtmm.who = who
 	    rtmm.key = params[:key].to_s
