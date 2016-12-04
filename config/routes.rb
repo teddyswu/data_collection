@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   resources :rtmms
   namespace :rtmm do
     resources :customer_base
     resources :history
     resources :supplier
   end
+  root :to => "rtmms#index"
   post "rtmm/get_data", :to => "rtmms#get_data"
   post "rtmm/del_data", :to => "rtmms#del_data"
   get "rtmm/msg", :to =>"rtmms#msg"

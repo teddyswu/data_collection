@@ -28,6 +28,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem "rvm-capistrano", '~> 1.5.0'
 gem "capistrano",     '~> 2.15.4'
 
+gem 'devise', '~> 3.5.7'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
