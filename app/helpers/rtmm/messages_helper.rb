@@ -1,0 +1,2 @@
+module Rtmm::MessagesHelper
+end

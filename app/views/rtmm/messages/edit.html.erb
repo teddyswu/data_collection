@@ -1,0 +1,11 @@
+<%= form_for @message, :url => rtmm_message_path(@message.id) do |f| %>
+  <div class="form-group row">
+	  <label for="example-text-input" class="col-xs-2 col-form-label">Name</label>
+	  <div class="col-xs-10"><%= @message.rtmm_category.name%></div>
+	</div>
+	<div class="form-group">
+    <%= f.label :messages, "Messages" %>
+    <%= f.text_area :messages ,class: "form-control", rows: 10%>
+  </div>
+    <%= f.submit "Update", class: "btn btn-primary" %>
+<% end %>

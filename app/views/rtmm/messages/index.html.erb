@@ -1,0 +1,35 @@
+<style>
+	.table-inverse {
+    color: #eceeef;
+    background-color: #373a3c;
+  }
+  .bd {
+    position: relative;
+    padding: 1.5rem;
+    margin: 1rem -1rem;
+    border: solid #f7f7f9;
+    border-width: .2rem;
+  }
+</style>
+<div class="bd">
+	<table class="table table-bordered table-inverse">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Name</th>
+	      <th>Message</th>
+	      <th>Edit</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<% @groups.each do |group|%>
+		    <tr>
+		      <th scope="row"><%= group.id%></th>
+		      <td><%= group.name %></td>
+		      <td><div style="height: 130.6px;width: 250px;"><%= group.rtmm_message.messages.html_safe%></div></td>
+		      <td><%= link_to "Set", edit_rtmm_message_path(group.id)%></td>
+		    </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>

@@ -6,12 +6,12 @@ Rails.application.routes.draw do
     resources :customer_base
     resources :history
     resources :supplier
+    resources :messages
   end
   root :to => "rtmms#index"
   post "rtmm/get_data", :to => "rtmms#get_data"
   post "rtmm/del_data", :to => "rtmms#del_data"
-  get "rtmm/msg", :to =>"rtmms#msg"
-  match "rtmm/get_msg", :to => "rtmms#get_msg", :via => [:post]
+  get "rtmm/get_msg", :to =>"rtmms#get_msg"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

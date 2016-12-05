@@ -1,6 +1,7 @@
 class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
-	before_action :authenticate_user!, :except => [:get_data, :del_data]
+	before_filter :set_cors_header
+	before_action :authenticate_user!, :except => [:get_data, :del_data, :get_msg]
 	def index
 		@category = RtmmCategory.all
 		@history  = RtmmHistory.all
@@ -53,21 +54,26 @@ class RtmmsController < ApplicationController
 		end
 		render :text => ""
 	end
+  def get_msg
+  	message = ""
+  	if params[:who].present?
+  		who = Digest::MD5.hexdigest(params[:who]).downcase
+  		user = RtmmUser.find_by_who(who)
+  		message = user.rtmm_category.rtmm_message.messages if user.present? && user.try(:rtmm_category).present?
+  	end
+  	render :text => message
+  end
+   
+	def set_cors_header
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+	end
 	def talk
   	who = params[:who].to_s
   	@ad_msg = AdMsg.where(["to_user = ? or from_user = ?", who, who]).order("created_at DESC").limit(3).reverse
 		render :layout => false
-  end
-
-  def msg
-  	@ad_msg = AdMsg.where(["to_user = ? or from_user = ?", cookies[:sogi_track_name].to_s, cookies[:sogi_track_name].to_s]).order("created_at DESC").limit(3).reverse
-  	@ad_msg = [] if @ad_msg.blank?
-  	render :layout => false
-  end
-
-  def get_msg
-  	ad_msg = AdMsg.new(cate_params)
-  	ad_msg.save
   end
 
   def cate_params
