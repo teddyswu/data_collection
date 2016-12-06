@@ -32,10 +32,11 @@ module DataCollection
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.middleware.use Rack::Cors do
+
+    config.middleware.insert_before 0, "Rack::Cors" do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: %i(get options post), max_age: 15
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
   end
