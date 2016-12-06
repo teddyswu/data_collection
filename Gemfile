@@ -30,6 +30,8 @@ gem "capistrano",     '~> 2.15.4'
 
 gem 'devise', '~> 3.5.7'
 
+gem 'rack-cors', '0.4.0', require: 'rack/cors'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

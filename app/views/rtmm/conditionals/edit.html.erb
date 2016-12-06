@@ -1,0 +1,49 @@
+<style>
+	.table-inverse {
+    color: #eceeef;
+    background-color: #373a3c;
+  }
+  .bd {
+    position: relative;
+    padding: 1.5rem;
+    margin: 1rem -1rem;
+    border: solid #f7f7f9;
+    border-width: .2rem;
+  }
+</style>
+<div class="bd">
+	<table class="table table-bordered table-inverse">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Name</th>
+	      <th>Keyword_one</th>
+	      <th>Keyword_two</th>
+	      <th>Keyword_three</th>
+	      <th>Keyword_four</th>
+	      <th>Keyword_five</th>
+	      <th>總數百分比</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <th scope="row"><%= @category.id%></th>
+	      <td><%= @category.name %></td>
+	      <td><%= @category.keyword_one %></td>
+	      <td><%= @category.keyword_two %></td>
+	      <td><%= @category.keyword_three %></td>
+	      <td><%= @category.keyword_four %></td>
+	      <td><%= @category.keyword_five %></td>
+	      <td>
+	      	<%= form_for @category, :url => rtmm_conditional_path(@category.id) do |f| %>
+	      		<%= f.text_field :total_percent, size: 2, style: "color: black"%>
+	      		<%= f.submit "Update", class: "btn btn-primary"%>
+	      	<% end%>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+</div>
+<div class="alert alert-info">
+  <strong>Success!</strong> 分析模組一律轉換為小寫比對
+</div>

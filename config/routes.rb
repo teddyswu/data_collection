@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :history
     resources :supplier
     resources :messages
+    resources :conditionals
   end
   root :to => "rtmms#index"
   post "rtmm/get_data", :to => "rtmms#get_data"

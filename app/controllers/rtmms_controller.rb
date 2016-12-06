@@ -1,6 +1,5 @@
 class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
-	before_filter :set_cors_header
 	before_action :authenticate_user!, :except => [:get_data, :del_data, :get_msg]
 	def index
 		@category = RtmmCategory.all
@@ -63,13 +62,7 @@ class RtmmsController < ApplicationController
   	end
   	render :text => message
   end
-   
-	def set_cors_header
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-    headers['Access-Control-Request-Method'] = '*'
-    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-	end
+ 
 	def talk
   	who = params[:who].to_s
   	@ad_msg = AdMsg.where(["to_user = ? or from_user = ?", who, who]).order("created_at DESC").limit(3).reverse
