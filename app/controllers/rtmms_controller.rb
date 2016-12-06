@@ -28,8 +28,8 @@ class RtmmsController < ApplicationController
 	    rtmm.key = params[:key].to_s
 	    rtmm.val = params[:val].to_s
 	    rtmm.save!	
-	    user = RtmmUser.find_or_create_by(who: who) 
 	  end
+	  user = RtmmUser.find_or_create_by(who: who)
 	  user.is_online = true
 	  user.save
     render :text => ""
