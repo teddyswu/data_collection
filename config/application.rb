@@ -35,7 +35,7 @@ module DataCollection
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource '*', headers: :any, methods: %i(get options), max_age: 15
+        resource '*', headers: :any, methods: %i(get options post), max_age: 15
       end
     end
   end
