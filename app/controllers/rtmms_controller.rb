@@ -1,6 +1,11 @@
 class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	before_action :authenticate_user!, :except => [:get_data, :del_data, :get_msg]
+
+  caches_action :data_ana, :cache_path => Proc.new {
+    cache_path = "#{request.path}_data_ana_action_cache"
+  }, :expires_in => 24.hour, :layout => false
+
 	def index
 		@category = RtmmCategory.all
 		@history  = RtmmHistory.all
@@ -53,6 +58,22 @@ class RtmmsController < ApplicationController
 		end
 		render :text => ""
 	end
+
+	def data_ana
+		@user = RtmmUser.where.not(:category => nil).count
+		all_total = RtmmHistory.where.not(:category => nil, :category=> "other").count
+		htc_total = RtmmHistory.where(:category => "htc").count
+		samsung_total = RtmmHistory.where(:category => "samsung").count
+		sony_total = RtmmHistory.where(:category => "sony").count
+		asus_total = RtmmHistory.where(:category => "asus").count
+		huawei_total = RtmmHistory.where(:category => "huawei").count
+		@htc = htc_total != 0 ? ( htc_total.to_f / all_total.to_f * 100) : 0
+		@samsung = samsung_total != 0 ? ( samsung_total.to_f / all_total.to_f * 100) : 0
+		@sony = sony_total != 0 ? ( sony_total.to_f / all_total.to_f * 100) : 0
+		@asus = asus_total != 0 ? ( asus_total.to_f / all_total.to_f * 100) : 0
+		@huawei = huawei_total != 0 ? ( huawei_total.to_f / all_total.to_f * 100) : 0
+	end
+
   def get_msg
   	message = ""
   	if params[:who].present?

@@ -14,7 +14,7 @@ module SogiBuilder
         history.category = "sony" if history.val.downcase.include?("sony")
         history.category = "asus" if history.val.downcase.include?("asus")
         history.category = "huawei" if history.val.downcase.include?("huawei")
-        history.category = "samsung" if history.val.downcase.include?("samsung")
+        history.category = "htc" if history.val.downcase.include?("htc")
         history.save!
       end
     end

@@ -1,0 +1,40 @@
+<br>
+<div class="alert alert-success">不重複投遞次數<%= @user %></div>
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">總歷程(不包含Other)</div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+      <div id="hinet"></div>
+    </div>
+    <!-- /.panel-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+
+
+<script>
+	$(function() {
+		Morris.Donut({
+		  element: 'hinet',
+		  data: [{
+		      label: "SAMSUNG",
+		      value: <%= @samsung.to_i %>
+		  }, {
+		      label: "SONY",
+		      value: <%= @sony.to_i %>
+		  }, {
+		      label: "ASUS",
+		      value: <%= @asus.to_i %>
+		  },{
+		      label: "HUAWEI",
+		      value: <%= @huawei.to_i %>
+		  },{
+		      label: "HTC",
+		      value: <%= @htc.to_i %>
+		  }],
+		  resize: true,
+		  formatter: function (y) { return y + "%" ;}
+		});
+	});
+</script>

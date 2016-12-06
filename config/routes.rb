@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
   devise_for :users
+  root :to => "rtmms#index"
+  post "rtmm/get_data", :to => "rtmms#get_data"
+  post "rtmm/del_data", :to => "rtmms#del_data"
+  get "rtmm/get_msg", :to =>"rtmms#get_msg"
+  get "rtmm/data_ana", :to => "rtmms#data_ana"
   resources :rtmms
   namespace :rtmm do
     resources :customer_base
@@ -9,10 +14,7 @@ Rails.application.routes.draw do
     resources :messages
     resources :conditionals
   end
-  root :to => "rtmms#index"
-  post "rtmm/get_data", :to => "rtmms#get_data"
-  post "rtmm/del_data", :to => "rtmms#del_data"
-  get "rtmm/get_msg", :to =>"rtmms#get_msg"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
