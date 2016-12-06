@@ -19,14 +19,16 @@ end
 scheduler  = Rufus::Scheduler.start_new
 proc_mutex = Mutex.new
 
-scheduler.cron "32 16 * * *", :mutex => proc_mutex do
-	safely_and_compute_time do
+scheduler.cron "00 02 * * *", :mutex => proc_mutex do
+  safely_and_compute_time do
     SogiBuilder::Analysis.brand_analysis
-	end
+    SogiBuilder::CustomizedLog.write("jobs.log", "brand_end_#{Time.now}")
+  end
 end
 
-scheduler.cron "35 16 * * *", :mutex => proc_mutex do
+scheduler.cron "00 04 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
     SogiBuilder::Category.start
+    SogiBuilder::CustomizedLog.write("jobs.log", "cate_end_#{Time.now}")
   end
 end
