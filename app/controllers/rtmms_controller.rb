@@ -76,6 +76,7 @@ class RtmmsController < ApplicationController
   		who = Digest::MD5.hexdigest(params[:who]).downcase
   		user = RtmmUser.find_by_who(who)
   		message = user.rtmm_category.rtmm_message.messages if user.present? && user.try(:rtmm_category).present?
+  	  RtmmRecord.find_or_create_by(who: who, date: Time.now.strftime('%Y-%m-%d')) if message != ""
   	end
   	render :text => message
   end
