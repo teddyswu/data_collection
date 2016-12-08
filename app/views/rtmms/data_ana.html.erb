@@ -1,15 +1,32 @@
-<br>
-<div class="alert alert-success">不重複投遞次數<%= @user %></div>
-<div class="col-lg-12">
-  <div class="panel panel-default">
-    <div class="panel-heading">總歷程(不包含Other)</div>
-    <!-- /.panel-heading -->
-    <div class="panel-body">
-      <div id="hinet"></div>
-    </div>
-    <!-- /.panel-body -->
-  </div>
-  <!-- /.panel -->
+<div class="row">
+	<h2>截自<%= (Time.now - 1.day).strftime('%Y-%m-%d') %>資訊</h2>
+	<div class="alert alert-success">符合客群數<%= @user %></div>
+	<div class="col-lg-12">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">總歷程(不包含Other)</div>
+	    <!-- /.panel-heading -->
+	    <div class="panel-body">
+	      <div id="hinet"></div>
+	    </div>
+	    <!-- /.panel-body -->
+	  </div>
+	  <!-- /.panel -->
+	  <div class="panel panel-default">
+	    <div class="panel-heading">總歷程(包含Other)</div>
+	    <!-- /.panel-heading -->
+	    <div class="panel-body">
+	      <div id="hinet_has_other"></div>
+	    </div>
+	    <!-- /.panel-body -->
+	  </div>
+		  <!-- /.panel -->
+		  <div class="panel panel-default">
+	      <div class="panel-heading">每日曝光人數</div>
+	      <div class="panel-body">
+	        <div id="userchart"></div>
+	      </div>
+	    </div>
+	</div>
 </div>
 
 
@@ -36,5 +53,47 @@
 		  resize: true,
 		  formatter: function (y) { return y + "%" ;}
 		});
+		Morris.Donut({
+		  element: 'hinet_has_other',
+		  data: [{
+		      label: "SAMSUNG",
+		      value: <%= @samsung_o.to_i %>
+		  }, {
+		      label: "SONY",
+		      value: <%= @sony_o.to_i %>
+		  }, {
+		      label: "ASUS",
+		      value: <%= @asus_o.to_i %>
+		  },{
+		      label: "HUAWEI",
+		      value: <%= @huawei_o.to_i %>
+		  },{
+		      label: "HTC",
+		      value: <%= @htc_o.to_i %>
+		  },{
+		      label: "other",
+		      value: <%= @other.to_i %>
+		  }],
+		  resize: true,
+		  formatter: function (y) { return y + "%" ;}
+		});
+	});
+  new Morris.Line({
+	  // ID of the element in which to draw the chart.
+	  element: 'userchart',
+	  // Chart data records -- each entry in this array corresponds to a point on
+	  // the chart.
+	  data: [
+	    <% @daycount.each do |daycount|%>
+	      { day: '<%= daycount.rdate %>', value: <%= daycount.pa %> },
+	    <% end %>
+	  ],
+	  // The name of the data record attribute that contains x-values.
+	  xkey: 'day',
+	  // A list of names of data record attributes that contain y-values.
+	  ykeys: ['value'],
+	  // Labels for the ykeys -- will be displayed when you hover over the
+	  // chart.
+	  labels: ['Value']
 	});
 </script>

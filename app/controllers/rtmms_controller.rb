@@ -6,7 +6,7 @@ class RtmmsController < ApplicationController
 		@category = RtmmCategory.all
 		@history  = RtmmHistory.all
 		@user     = RtmmUser.all
-		@daycount 			= RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
+		@daycount = RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
 	end
 	def get_data
 		who = Digest::MD5.hexdigest(params[:who]).downcase
@@ -63,11 +63,23 @@ class RtmmsController < ApplicationController
 		sony_total = RtmmHistory.where(:category => "sony").count
 		asus_total = RtmmHistory.where(:category => "asus").count
 		huawei_total = RtmmHistory.where(:category => "huawei").count
+		other_total = RtmmHistory.where(:category => "other").count
+		all_in_other_total = RtmmHistory.where.not(:category => nil).count
+		
 		@htc = htc_total != 0 ? ( htc_total.to_f / all_total.to_f * 100) : 0
 		@samsung = samsung_total != 0 ? ( samsung_total.to_f / all_total.to_f * 100) : 0
 		@sony = sony_total != 0 ? ( sony_total.to_f / all_total.to_f * 100) : 0
 		@asus = asus_total != 0 ? ( asus_total.to_f / all_total.to_f * 100) : 0
 		@huawei = huawei_total != 0 ? ( huawei_total.to_f / all_total.to_f * 100) : 0
+
+		@htc_o = htc_total != 0 ? ( htc_total.to_f / all_in_other_total.to_f * 100) : 0
+		@samsung_o = samsung_total != 0 ? ( samsung_total.to_f / all_in_other_total.to_f * 100) : 0
+		@sony_o = sony_total != 0 ? ( sony_total.to_f / all_in_other_total.to_f * 100) : 0
+		@asus_o = asus_total != 0 ? ( asus_total.to_f / all_in_other_total.to_f * 100) : 0
+		@huawei_o = huawei_total != 0 ? ( huawei_total.to_f / all_in_other_total.to_f * 100) : 0
+		@other = other_total != 0 ? ( other_total.to_f / all_in_other_total.to_f * 100) : 0
+
+		@daycount = RtmmRecord.find_by_sql("select SUBSTRING(IFNULL(date,''),1,10) as rdate, COUNT(SUBSTRING(IFNULL(date,''),1,10)) as pa from `rtmm_records` group by SUBSTRING(IFNULL(date,''),1,10)")
 	end
 
   def get_msg
