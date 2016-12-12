@@ -6,6 +6,18 @@ require "nokogiri"
 module SogiBuilder
 
   class Analysis    
+    def self.rtmm_to_his
+      rtmms = Rtmm.where(['created_at < ?', Time.now])
+      rtmms.each do |rtmm|
+        rh = RtmmHistory.new
+        rh.who = rtmm.who
+        rh.key = rtmm.key
+        rh.val = rtmm.val
+        rh.residence_time = 6
+        rh.save!
+        rtmm.destroy
+      end
+    end
     def self.brand_analysis
       historys = RtmmHistory.where.not(:who => "").where(:category => nil)
       historys.each do |history|

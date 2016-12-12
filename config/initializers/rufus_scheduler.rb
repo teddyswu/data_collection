@@ -21,6 +21,7 @@ proc_mutex = Mutex.new
 
 scheduler.cron "00 02 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
+    SogiBuilder::Analysis.rtmm_to_his
     SogiBuilder::Analysis.brand_analysis
     SogiBuilder::CustomizedLog.write("jobs.log", "brand_end_#{Time.now}")
   end
