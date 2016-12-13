@@ -17,7 +17,7 @@ class RtmmsController < ApplicationController
 		@daycount = RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
 	end
 	def get_data
-		who = Digest::MD5.hexdigest(params[:who].to_s).downcase
+		who = Digest::MD5.hexdigest(params[:who].to_s[0..253]).downcase
 		check_rtmm = RtmmUser.find_by_who(who)
     if check_rtmm.present?
 			rtmm = Rtmm.new
@@ -45,7 +45,7 @@ class RtmmsController < ApplicationController
   end
   def del_data
 		if params[:who].present? & params[:key].present? & params[:val].present?
-      who = Digest::MD5.hexdigest(params[:who]).downcase
+      who = Digest::MD5.hexdigest(params[:who][0..253]).downcase
       key = params[:key].to_s
       val = params[:val].to_s
 			rtmm = Rtmm.where(:who => who, :key => key, :val => val)
@@ -93,7 +93,7 @@ class RtmmsController < ApplicationController
   def get_msg
   	message = ""
   	if params[:who].present?
-  		who = Digest::MD5.hexdigest(params[:who]).downcase
+  		who = Digest::MD5.hexdigest(params[:who][0..253]).downcase
   		user = RtmmUser.find_by_who(who)
   		message = user.rtmm_category.rtmm_message.messages if user.present? && user.try(:rtmm_category).present?
   	  RtmmRecord.find_or_create_by(who: who, date: Time.now.strftime('%Y-%m-%d')) if message != ""
