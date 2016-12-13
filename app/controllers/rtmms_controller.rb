@@ -17,7 +17,7 @@ class RtmmsController < ApplicationController
 		@daycount = RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
 	end
 	def get_data
-		who = Digest::MD5.hexdigest(params[:who]).downcase
+		who = Digest::MD5.hexdigest(params[:who].to_s).downcase
 		check_rtmm = RtmmUser.find_by_who(who)
     if check_rtmm.present?
 			rtmm = Rtmm.new
