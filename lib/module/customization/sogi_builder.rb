@@ -18,6 +18,12 @@ module SogiBuilder
         rtmm.destroy
       end
     end
+    def self.rtmm_to_user
+      rtmm_his = RtmmHistory.where(['created_at > ?', (Time.now - 1.day).strftime("%Y-%m-%d")])
+      rtmm_his.each do |rtmm_hi|
+        rh = RtmmUser.find_or_create_by(who: rtmm_hi.who)
+      end
+    end
     def self.brand_analysis
       historys = RtmmHistory.where.not(:who => "").where(:category => nil)
       historys.each do |history|

@@ -17,30 +17,32 @@ class RtmmsController < ApplicationController
 		@daycount = RtmmHistory.find_by_sql("select SUBSTRING(IFNULL(created_at,''),1,10) as sdate, COUNT(SUBSTRING(IFNULL(created_at,''),1,10)) as pa from `rtmm_histories` group by SUBSTRING(IFNULL(created_at,''),1,10)").last(7)
 	end
 	def get_data
-		who = Digest::MD5.hexdigest(params[:who].to_s[0..253]).downcase
-		check_rtmm = RtmmUser.find_by_who(who)
-    if check_rtmm.present?
+		who = Digest::MD5.hexdigest(params[:who]).downcase
+		#check_rtmm = RtmmUser.find_by_who(who)
+    #if check_rtmm.present?
 			rtmm = Rtmm.new
 	    rtmm.who = who
 	    rtmm.key = params[:key].to_s
 	    rtmm.val = params[:val].to_s
 	    rtmm.save!
-	  else
-	  	i = 1
-	  	loop do
-	  		i += 1
-	  		who = who + i.to_s
-	  		break if Rtmm.where(:who => who).blank?
-	  	end
-	  	rtmm = Rtmm.new
-	    rtmm.who = who
-	    rtmm.key = params[:key].to_s
-	    rtmm.val = params[:val].to_s
-	    rtmm.save!	
-	  end
-	  user = RtmmUser.find_or_create_by(who: who)
-	  user.is_online = true
-	  user.save
+	  #else
+	  # 	i = 1
+	  # 	loop do
+	  # 		i += 1
+	  # 		who = who + i.to_s
+	  # 		break if Rtmm.where(:who => who).blank?
+	  # 	end
+	  # 	rtmm = Rtmm.new
+	  #   rtmm.who = who[0..253]
+	  #   rtmm.key = params[:key].to_s
+	  #   rtmm.val = params[:val].to_s
+	  #   rtmm.save!	
+	  # end
+	  if ['samsung','sony','asus','huawei','htc'].any? { |word| params[:val].to_s.downcase.include?(word) }
+		  user = RtmmUser.find_or_create_by(who: who)
+		  user.category = 1
+		  user.save
+		end
     render :text => ""
   end
   def del_data
