@@ -19,9 +19,14 @@ end
 scheduler  = Rufus::Scheduler.start_new
 proc_mutex = Mutex.new
 
-scheduler.cron "00 02 * * *", :mutex => proc_mutex do
+scheduler.cron "00 00-23 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
     SogiBuilder::Analysis.rtmm_to_his
+  end
+end
+
+scheduler.cron "00 02 * * *", :mutex => proc_mutex do
+  safely_and_compute_time do
     SogiBuilder::Analysis.brand_analysis
     SogiBuilder::CustomizedLog.write("jobs.log", "brand_end_#{Time.now}")
   end

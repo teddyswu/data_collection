@@ -2,6 +2,10 @@ class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 	before_action :authenticate_user!, :except => [:get_data, :del_data, :get_msg]
 
+	caches_action :index, :cache_path => Proc.new {
+    cache_path = "#{request.path}_index_action_cache"
+  }, :expires_in => 12.hour, :layout => false
+
 	def index
 		@category = RtmmCategory.all
 		@history  = RtmmHistory.all

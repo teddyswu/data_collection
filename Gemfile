@@ -33,6 +33,7 @@ gem 'devise', '~> 3.5.7'
 gem 'rack-cors', '0.4.0', require: 'rack/cors'
 
 gem "actionpack-action_caching", '1.1.1'
+gem "dalli"
 
 gem "newrelic_rpm"
 
