@@ -1,0 +1,80 @@
+<div class="row">
+	<h2>截自<%= (Time.now - 1.day).strftime('%Y-%m-%d') %>資訊</h2>
+	<div class="alert alert-success">符合客群數<%= @user %></div>
+	<div class="col-lg-12">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">總歷程(不包含Other)</div>
+	    <!-- /.panel-heading -->
+	    <div class="panel-body">
+	      <div id="hinet"></div>
+	    </div>
+	    <!-- /.panel-body -->
+	  </div>
+	  <!-- /.panel -->
+	  <div class="panel panel-default">
+	    <div class="panel-heading">總歷程(包含Other)</div>
+	    <!-- /.panel-heading -->
+	    <div class="panel-body">
+	      <div id="hinet_has_other"></div>
+	    </div>
+	    <!-- /.panel-body -->
+	  </div>
+	</div>
+</div>
+
+
+<script>
+	$(function() {
+		Morris.Donut({
+		  element: 'hinet',
+		  data: [{
+		      label: "SAMSUNG",
+		      value: <%= @samsung.to_i %>
+		  }, {
+		      label: "SONY",
+		      value: <%= @sony.to_i %>
+		  }, {
+		      label: "ASUS",
+		      value: <%= @asus.to_i %>
+		  },{
+		      label: "HUAWEI",
+		      value: <%= @huawei.to_i %>
+		  },{
+		      label: "HTC",
+		      value: <%= @htc.to_i %>
+		  },{
+		      label: "Apple",
+		      value: <%= @apple.to_i %>
+		  }],
+		  resize: true,
+		  formatter: function (y) { return y + "%" ;}
+		});
+		Morris.Donut({
+		  element: 'hinet_has_other',
+		  data: [{
+		      label: "SAMSUNG",
+		      value: <%= @samsung_o.to_i %>
+		  }, {
+		      label: "SONY",
+		      value: <%= @sony_o.to_i %>
+		  }, {
+		      label: "ASUS",
+		      value: <%= @asus_o.to_i %>
+		  },{
+		      label: "HUAWEI",
+		      value: <%= @huawei_o.to_i %>
+		  },{
+		      label: "HTC",
+		      value: <%= @htc_o.to_i %>
+		  },{
+		      label: "Apple",
+		      value: <%= @apple_o.to_i %>
+		  },{
+		      label: "other",
+		      value: <%= @other.to_i %>
+		  }],
+		  resize: true,
+		  formatter: function (y) { return y + "%" ;}
+		});
+	});
+</script>

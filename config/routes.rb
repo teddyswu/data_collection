@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   post "rtmm/get_data", :to => "rtmms#get_data"
   post "rtmm/del_data", :to => "rtmms#del_data"
   get "rtmm/get_msg", :to =>"rtmms#get_msg"
-  get "rtmm/data_ana", :to => "rtmms#data_ana"
+  get "rtmm/data_cht", :to => "rtmms#data_cht"
+  get "rtmm/data_apple", :to => "rtmms#data_apple"
+  get "rtmm/data_list", :to => "rtmms#data_list"
   resources :rtmms
   namespace :rtmm do
     resources :customer_base

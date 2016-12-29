@@ -33,6 +33,9 @@ module SogiBuilder
         history.category = "asus" if history.val.downcase.include?("asus")
         history.category = "huawei" if history.val.downcase.include?("huawei")
         history.category = "htc" if history.val.downcase.include?("htc")
+        history.category = "apple" if history.val.downcase.include?("apple")
+        history.category = "apple" if history.val.downcase.include?("iPhone")
+        history.category = "apple" if history.val.downcase.include?("iPad")
         history.save!
       end
     end
@@ -43,9 +46,15 @@ module SogiBuilder
       users = RtmmUser.where(category: nil)
       users.each do |user|
         history_all = RtmmHistory.where(:who => user.who).count
-        history_curr = RtmmHistory.where(:who => user.who).where.not(:category => "other").count
+        history_curr = RtmmHistory.where(:who => user.who).where.not(:category => "other", :category => "apple").count
         if history_curr != 0
           user.category = 1 if (history_curr / history_all * 100) > RtmmCategory.first.total_percent.to_i
+          user.save!
+        end
+        apple_curr = RtmmHistory.where(:who => user.who, :category => "apple").count
+        apple_total_percent = RtmmCategory.find(2).total_percent.to_i
+        if history_curr != 0
+          user.category = 2 if ( apple_curr / history_all * 100) >  apple_total_percent
           user.save!
         end
       end
