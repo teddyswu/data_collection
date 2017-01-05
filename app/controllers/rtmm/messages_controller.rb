@@ -10,6 +10,8 @@ class Rtmm::MessagesController < RtmmsController
 	def update
 	  @message = RtmmMessage.find(params[:id])
 	  @message.messages = params[:rtmm_message][:messages]
+	  @message.start_date = params[:rtmm_message][:start_date]
+	  @message.end_date = params[:rtmm_message][:end_date]
 	  @message.save!
 
 	  redirect_to :action => :index
