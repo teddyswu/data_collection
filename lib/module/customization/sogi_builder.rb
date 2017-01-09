@@ -43,7 +43,7 @@ module SogiBuilder
 
   class Category
     def self.start
-      users = RtmmUser.where(category: nil)
+      users = RtmmUser.all
       users.each do |user|
         history_all = RtmmHistory.where(:who => user.who).count
         history_curr = RtmmHistory.where(:who => user.who).where.not(:category => "other", :category => "apple").count
