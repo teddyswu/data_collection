@@ -29,8 +29,8 @@
 		      <th scope="row"><%= group.id%></th>
 		      <td><%= group.name %></td>
 		      <td><div style="height: 130.6px;width: 250px;"><%= group.rtmm_message.messages.html_safe%></div></td>
-		      <td><%= group.rtmm_message.start_date%></td>
-		      <td><%= group.rtmm_message.end_date%></td>
+		      <td><%= group.rtmm_message.start_date.strftime("%Y-%m-%d %H:%M")%></td>
+		      <td><%= group.rtmm_message.end_date.strftime("%Y-%m-%d %H:%M")%></td>
 		      <td><%= link_to "Set", edit_rtmm_message_path(group.id)%></td>
 		    </tr>
 	    <% end %>
