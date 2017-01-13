@@ -1,4 +1,4 @@
-class Rtmm::ConditionalsController < RtmmsController
+class Rtmm::ConditionalsController < ApplicationController
 	def index
 		@categorys = RtmmCategory.all
 	end

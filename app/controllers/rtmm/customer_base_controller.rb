@@ -1,4 +1,4 @@
-class Rtmm::CustomerBaseController < RtmmsController
+class Rtmm::CustomerBaseController < ApplicationController
   before_filter :get_option, :only => [:new, :edit]
 
 	def index

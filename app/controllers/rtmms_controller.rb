@@ -1,6 +1,6 @@
 class RtmmsController < ApplicationController
 	skip_before_filter :verify_authenticity_token
-	before_action :authenticate_user!, :except => [:get_data, :del_data, :get_msg]
+	skip_before_action :authenticate_user!, :only => [:get_data, :del_data, :get_msg]
 
 	caches_action :index, :cache_path => Proc.new {
     cache_path = "#{request.path}_index_action_cache"
@@ -42,11 +42,11 @@ class RtmmsController < ApplicationController
 	  #   rtmm.val = params[:val].to_s
 	  #   rtmm.save!	
 	  # end
-	  if ['samsung','sony','asus','huawei','htc'].any? { |word| params[:val].to_s.downcase.include?(word) }
-		  user = RtmmUser.find_or_create_by(who: who)
-		  user.category = 1
-		  user.save
-		end
+	 #  if ['samsung','sony','asus','huawei','htc'].any? { |word| params[:val].to_s.downcase.include?(word) }
+		#   user = RtmmUser.find_or_create_by(who: who)
+		#   user.category = 1
+		#   user.save
+		# end
     render :text => ""
   end
   def del_data

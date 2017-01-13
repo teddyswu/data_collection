@@ -1,4 +1,4 @@
-class Rtmm::HistoryController < RtmmsController
+class Rtmm::HistoryController < ApplicationController
 	def index
 		@history = RtmmHistory.all.order(:id).reverse_order.limit(100)
 	end

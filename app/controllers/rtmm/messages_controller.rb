@@ -1,4 +1,4 @@
-class Rtmm::MessagesController < RtmmsController
+class Rtmm::MessagesController < ApplicationController
 	def index
 		@groups = RtmmCategory.select("id","name").all
 	end

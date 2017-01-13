@@ -1,4 +1,4 @@
-class Rtmm::SupplierController < RtmmsController
+class Rtmm::SupplierController < ApplicationController
 	def index
 		@cate = RtmmCategory.all
 	end
