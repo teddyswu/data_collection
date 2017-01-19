@@ -138,7 +138,8 @@ class RtmmsController < ApplicationController
 				cat = user.rtmm_category 
 				message = RtmmMessage.where(rtmm_category_id: cat).enabled[0].try(:messages) if user.rtmm_category.present?
 			end
-  		RtmmRecord.find_or_create_by(who: who, date: Time.now.strftime('%Y-%m-%d')) if message != "" or message != nil
+  		#RtmmRecord.find_or_create_by(who: who, date: Time.now.strftime('%Y-%m-%d')) if message != "" or message != nil
+  		RtmmAppleRecord.find_or_create_by(who: who, date: Time.now.strftime('%Y-%m-%d')) if message != "" or message != nil
   	end
   	render :text => message
   end
