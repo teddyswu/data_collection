@@ -8,7 +8,7 @@ def safely_and_compute_time
   end
   message = yield
   spent   = Time.now - beginning
-  SogiBuilder::CustomizedLog.write("jobs.log", "Time Spent:#{spent}, #{message}")
+  SogiBuilder::CustomizedLog.write("jobs.log", "Time Spent:#{spent}")
 rescue Exception => e
   SogiBuilder::CustomizedLog.write("jobs.log", e.inspect)
 ensure
@@ -27,15 +27,25 @@ end
 
 scheduler.cron "00 02 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
+    SogiBuilder::CustomizedLog.write("jobs.log", "brand_analysis_start_#{Time.now}")
     SogiBuilder::Analysis.rtmm_to_user
     SogiBuilder::Analysis.brand_analysis
-    SogiBuilder::CustomizedLog.write("jobs.log", "brand_end_#{Time.now}")
+    SogiBuilder::CustomizedLog.write("jobs.log", "brand_analysis_end_#{Time.now}")
   end
 end
 
 scheduler.cron "00 04 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
+    SogiBuilder::CustomizedLog.write("jobs.log", "cate_start_#{Time.now}")
     SogiBuilder::Category.start
     SogiBuilder::CustomizedLog.write("jobs.log", "cate_end_#{Time.now}")
+  end
+end
+
+scheduler.cron "00 05 * * *", :mutex => proc_mutex do
+  safely_and_compute_time do
+    SogiBuilder::CustomizedLog.write("jobs.log", "brand_other_analysis_start_#{Time.now}")
+    SogiBuilder::Category.brand_other_analysis
+    SogiBuilder::CustomizedLog.write("jobs.log", "brand_other_analysis_end_#{Time.now}")
   end
 end

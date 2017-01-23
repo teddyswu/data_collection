@@ -19,20 +19,26 @@ module SogiBuilder
       end
     end
     def self.rtmm_to_user
-      rtmm_his = RtmmHistory.where(['created_at > ?', (Time.now - 1.day).strftime("%Y-%m-%d")])
-      rtmm_his.each do |rtmm_hi|
+      rtmm_his = RtmmHistory.where(['created_at > ?', (Time.now - 1.day).strftime("%Y-%m-%d")]).find_each( :batch_size => 1000 ) do |rtmm_hi|
         rh = RtmmUser.find_or_create_by(who: rtmm_hi.who)
       end
     end
     def self.brand_analysis
-      historys = RtmmHistory.where.not(:who => "").where(:category => nil)
-      historys.each do |history|
+      RtmmHistory.where.not(:who => "").where(:category => nil).find_each( :batch_size => 1000 ) do |history|
         history.category = "other"
         history.category = "samsung" if history.val.downcase.include?("samsung")
         history.category = "sony" if history.val.downcase.include?("sony")
         history.category = "asus" if history.val.downcase.include?("asus")
         history.category = "huawei" if history.val.downcase.include?("huawei")
         history.category = "htc" if history.val.downcase.include?("htc")
+        history.category = "apple" if history.val.downcase.include?("apple")
+        history.category = "apple" if history.val.downcase.include?("iPhone")
+        history.category = "apple" if history.val.downcase.include?("iPad")
+        history.save!
+      end
+    end
+    def self.brand_other_analysis
+      RtmmHistory.where.not(:who => "").where(:category => "other").find_each( :batch_size => 1000 ) do |history|
         history.category = "apple" if history.val.downcase.include?("apple")
         history.category = "apple" if history.val.downcase.include?("iPhone")
         history.category = "apple" if history.val.downcase.include?("iPad")
