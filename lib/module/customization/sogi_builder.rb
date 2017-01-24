@@ -49,8 +49,7 @@ module SogiBuilder
 
   class Category
     def self.start
-      users = RtmmUser.all
-      users.each do |user|
+      RtmmUser.all.find_each( :batch_size => 100 ) do |user|
         history_all = RtmmHistory.where(:who => user.who).count
         history_curr = RtmmHistory.where(:who => user.who).where.not(:category => "other", :category => "apple").count
         if history_curr != 0

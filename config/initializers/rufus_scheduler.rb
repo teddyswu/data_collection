@@ -42,10 +42,10 @@ scheduler.cron "00 04 * * *", :mutex => proc_mutex do
   end
 end
 
-scheduler.cron "00 05 * * *", :mutex => proc_mutex do
+scheduler.cron "00 01 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
     SogiBuilder::CustomizedLog.write("jobs.log", "brand_other_analysis_start_#{Time.now}")
-    SogiBuilder::Category.brand_other_analysis
+    SogiBuilder::Analysis.brand_other_analysis
     SogiBuilder::CustomizedLog.write("jobs.log", "brand_other_analysis_end_#{Time.now}")
   end
 end
