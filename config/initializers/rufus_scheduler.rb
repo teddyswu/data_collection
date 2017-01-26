@@ -37,7 +37,7 @@ end
 scheduler.cron "00 04 * * *", :mutex => proc_mutex do
   safely_and_compute_time do
     SogiBuilder::CustomizedLog.write("jobs.log", "cate_start_#{Time.now}")
-    SogiBuilder::Category.start
+    #SogiBuilder::Category.start
     SogiBuilder::CustomizedLog.write("jobs.log", "cate_end_#{Time.now}")
   end
 end
