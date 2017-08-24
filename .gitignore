@@ -23,7 +23,6 @@ config/counter.yml
 config/*.txt
 public/assets
 public/*.xml
-public/*.txt
 public/rss/*.xml
 log/*
 webrat.log
