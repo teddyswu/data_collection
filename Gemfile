@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'rails-html-sanitizer', '>= 1.0.4'
+
 gem "rufus-scheduler", "2.0.24"  # 排程 穩定版本 2.0.24
 
 # Use jquery as the JavaScript library
