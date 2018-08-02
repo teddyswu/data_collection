@@ -54,8 +54,8 @@ class RtmmsController < ApplicationController
       who = Digest::MD5.hexdigest(params[:who][0..253]).downcase
       key = params[:key].to_s
       val = params[:val].to_s
-			rtmm = Rtmm.where(:who => who, :key => key, :val => val)
-			rtmm.destroy_all
+			# rtmm = Rtmm.where(:who => who, :key => key, :val => val)
+			# rtmm.destroy_all
 			history = RtmmHistory.new
 			history.who = who
 			history.key = key
