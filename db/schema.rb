@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104091407) do
+ActiveRecord::Schema.define(version: 20170120044923) do
+
+  create_table "rtmm_apple_records", force: :cascade do |t|
+    t.string   "who",        limit: 255
+    t.string   "date",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "rtmm_categories", force: :cascade do |t|
     t.string   "name",             limit: 255

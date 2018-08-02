@@ -37,7 +37,7 @@ gem 'rack-cors', '0.4.0', require: 'rack/cors'
 gem "actionpack-action_caching", '1.1.1'
 gem "dalli"
 
-gem "newrelic_rpm"
+gem 'newrelic_rpm', '~> 5.3', '>= 5.3.0.346'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
