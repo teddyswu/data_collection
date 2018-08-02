@@ -54,17 +54,17 @@ class RtmmsController < ApplicationController
       who = Digest::MD5.hexdigest(params[:who][0..253]).downcase
       key = params[:key].to_s
       val = params[:val].to_s
-			# rtmm = Rtmm.where(:who => who, :key => key, :val => val)
-			# rtmm.destroy_all
+			rtmm = Rtmm.where(:who => who, :key => key, :val => val)
+			rtmm.destroy_all
 			history = RtmmHistory.new
 			history.who = who
 			history.key = key
 			history.val = val
 			history.residence_time = params[:residence_time].to_s
 			history.save
-			user = RtmmUser.find_or_create_by(who: who)
-			user.is_online = false
-			user.save
+			# user = RtmmUser.find_or_create_by(who: who)
+			# user.is_online = false
+			# user.save
 		end
 		render :text => ""
 	end
